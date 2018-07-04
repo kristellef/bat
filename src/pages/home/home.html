@@ -1,0 +1,47 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>
+      BAT
+    </ion-title>
+  </ion-navbar> -->
+</ion-header>
+
+<ion-content padding class="back">
+<!-- <ion-card>
+
+  <ion-card-content>
+  <img src="assets/imgs/logo.png" class="logo">
+    <p style="text-align:center; margin-top:10px">Are you over 18?</p>
+    <button ion-button outline [navPush]="customerinfoPage" class="btn">Yes</button>
+    <button ion-button outline onclick="unsuccessful()" class="btn">No</button>
+  </ion-card-content>
+
+</ion-card> -->
+
+ <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 100%">
+     <ion-card>
+
+  <ion-card-content>
+  <img src="assets/imgs/logo.png" class="logo">
+    <h1 style="text-align:center; margin-top:10px">Are you a smoker over 18?</h1>
+    <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
+    <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
+  </ion-card-content>
+
+</ion-card> 
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+
+
+
+
+
+
+
+
+
+
