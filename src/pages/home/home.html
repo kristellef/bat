@@ -1,9 +1,6 @@
 <ion-header>
-  <!-- <ion-navbar>
-    <ion-title>
-      BAT
-    </ion-title>
-  </ion-navbar> -->
+  <button ion-button clear [navPush]="firstPage"><ion-icon name="arrow-back" style="color: #FF9900"></ion-icon>
+</button>
 </ion-header>
 
 <ion-content padding class="back">
@@ -20,28 +17,13 @@
 
  <ion-grid style="height: 100%">
     <ion-row justify-content-center align-items-center style="height: 100%">
-     <ion-card>
-
-  <ion-card-content>
+     <div>
   <img src="assets/imgs/logo.png" class="logo">
-    <h1 style="text-align:center; margin-top:10px">Are you a smoker over 18?</h1>
+    <p style="text-align:center; margin-top:10px; font-size:20px">Are you a smoker over 18?</p>
     <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
     <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
-  </ion-card-content>
-
-</ion-card> 
+  </div>
     </ion-row>
   </ion-grid>
 
 </ion-content>
-
-
-
-
-
-
-
-
-
-
-

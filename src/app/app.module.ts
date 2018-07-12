@@ -8,16 +8,20 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CustomerinfoPage } from '../pages/customerinfo/customerinfo';
+import { AdminPage } from '../pages/admin/admin';
+import { FirstpagePage } from '../pages/firstpage/firstpage';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     CustomerinfoPage,
+    AdminPage,
+    FirstpagePage,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { mode: 'ios'}),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -25,6 +29,8 @@ import { CustomerinfoPage } from '../pages/customerinfo/customerinfo';
     MyApp,
     HomePage,
     CustomerinfoPage,
+    AdminPage,
+    FirstpagePage,
   ],
   providers: [
     StatusBar,

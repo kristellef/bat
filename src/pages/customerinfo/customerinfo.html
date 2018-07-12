@@ -8,7 +8,6 @@
 
   <ion-navbar>
     <ion-title><img src="assets/imgs/logo.png" class="logonav"></ion-title>
-
   </ion-navbar>
 
 </ion-header>
@@ -20,16 +19,16 @@
 	<form [formGroup]="formgroup">
 
 		<ion-list>
-			<ion-item class="alignele">
-				<ion-label floating>Name *</ion-label>
-		  		<ion-input type="text" [(ngModel)]="myName" formControlName="name"></ion-input>
-			</ion-item>
 
+      <ion-item class="alignele">
+				<ion-label stacked>Name *</ion-label>
+		  	<ion-input type="text" [(ngModel)]="myName" formControlName="name" placeholder="John"></ion-input>
+      </ion-item>
 
-			<ion-item class="alignele">
-				<ion-label floating>Surname *</ion-label>
-		  		<ion-input type="text" [(ngModel)]="mySurname" formControlName="surname"></ion-input>
-			</ion-item>
+      <ion-item class="alignele">
+  			<ion-label stacked>Surname *</ion-label>
+		  	<ion-input type="text" [(ngModel)]="mySurname" formControlName="surname" placeholder="Doe"></ion-input>
+      </ion-item>
 			<!-- <ion-item *ngIf="surname.hasError('required') && surname.touched">
 				<p>Surname is required </p>
 			</ion-item> -->
@@ -53,45 +52,36 @@
 			</div>
 		</ion-item> -->
 
-		<ion-item class="alignele">
-			<div padding>
-				<h2 style="color:grey">Age</h2>
+			<div padding class="alignele">
+				<!-- <h2 style="color:grey">Age</h2> -->
 			  <ion-segment formControlName="birthdate">
-			      <ion-segment-button value="younger" class="btngender">
-			        18-25
+			      <ion-segment-button value="18-25" class="btngender">
+			        18-25yo
 			      </ion-segment-button>
-			      <ion-segment-button value="middle" class="btngender">
-			        26-35
+			      <ion-segment-button value="26-35" class="btngender">
+			        26-35yo
 			      </ion-segment-button>
-			      <ion-segment-button value="older" class="btngender">
+			      <ion-segment-button value="35+" class="btngender">
 			        35+
 			      </ion-segment-button>
 			    </ion-segment>
 			</div>
-		</ion-item>
 
-		<ion-item class="alignele">
-		  <!-- <ion-label floating>Gender</ion-label>
-		  <ion-select [(ngModel)]="myGender" formControlName="gender">
-		    <ion-option value="f">Female</ion-option>
-		    <ion-option value="m">Male</ion-option>
-		  </ion-select> -->
-			<div padding>
-				<h2 style="color:grey">Gender</h2>
+			<div padding class="alignele">
+				<!-- <h2 style="color:grey">Gender</h2> -->
 			  <ion-segment formControlName="gender">
 			      <ion-segment-button value="Male" class="btngender">
-			        M
+			        Male
 			      </ion-segment-button>
 			      <ion-segment-button value="Female" class="btngender">
-			        F
+			        Female
 			      </ion-segment-button>
 			    </ion-segment>
 			</div>
-		</ion-item>
 
 			<ion-item class="alignele">
-				<ion-label floating >Email </ion-label>
-		  		<ion-input type="email" [(ngModel)]="myEmail" formControlName="email"></ion-input>
+				<ion-label stacked >Email </ion-label>
+		  		<ion-input type="email" [(ngModel)]="myEmail" formControlName="email" placeholder="johndoe@gmail.com"></ion-input>
 			</ion-item>
 
 			<ion-item *ngIf="email.hasError('pattern') && email.touched">
@@ -100,46 +90,46 @@
 
 
 			<ion-item class="alignele">
-			    <ion-label floating>Phone Number *</ion-label>
-			    <ion-input type="text" [(ngModel)]="myNum" formControlName="number"></ion-input>
+			    <ion-label stacked>Phone Number *</ion-label>
+			    <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+961 "></ion-input>
 			</ion-item>
-			
+
 			<ion-item class="alignele">
-			<ion-label>Which brand do you usually smoke</ion-label>
-			    <ion-select [(ngModel)]="mybrand" formControlName="brand">
+			<ion-label stacked>Brand you usually smoke *</ion-label>
+			    <ion-select [(ngModel)]="mybrand" formControlName="brand" placeholder="None">
 			      <ion-option value="Allure Black KS">Allure Black KS</ion-option>
 			      <ion-option value="Allure Black SS">Allure Black SS</ion-option>
 			      <ion-option value="Allure White KS">Allure White KS</ion-option>
 			      <ion-option value="Allure White SS">Allure White SS</ion-option>
 			      <ion-option value="Bond 100 SC">Bond 100 SC</ion-option>
-			      <ion-option value="6">Bond Blue SS</ion-option>
-			      <ion-option value="7">Brilliant Blue</ion-option>
-			      <ion-option value="8">Brilliant SS</ion-option>
-			      <ion-option value="9">Camel Blue</ion-option>
-			      <ion-option value="10">Camel Yellow</ion-option>
-			      <ion-option value="11">Cedars Blue Plus 100 SC</ion-option>
-			      <ion-option value="12">Cedars Plus FF</ion-option>
-			      <ion-option value="13">Cedars Plus Silver</ion-option>
-			      <ion-option value="14">Cedars Plus 100 SC</ion-option>
-			      <ion-option value="15">Cedars soft 100s</ion-option>
-			      <ion-option value="16">Chesterfield 100 SC</ion-option>
-			      <ion-option value="17">Chesterfield KS SC</ion-option>
-			      <ion-option value="18">Gauloises Blue</ion-option>
-			      <ion-option value="19">Gauloises Red</ion-option>
-			      <ion-option value="20">Gauloises Yellow</ion-option>
-			      <ion-option value="21">Gitanes Blue</ion-option>
-			      <ion-option value="22">Gitanes Indigo</ion-option>
-			      <ion-option value="23">Gitanes ss</ion-option>
-			      <ion-option value="24">Glamour Menthol</ion-option>
-			      <ion-option value="25">Glamour Pink</ion-option>
-			      <ion-option value="26">Marlboro 100s</ion-option>
-			      <ion-option value="27">Marlboro Filter Plus</ion-option>
+			      <ion-option value="Bond Blue SS">Bond Blue SS</ion-option>
+			      <ion-option value="Brilliant Blue">Brilliant Blue</ion-option>
+			      <ion-option value="Brilliant SS">Brilliant SS</ion-option>
+			      <ion-option value="Camel Blue">Camel Blue</ion-option>
+			      <ion-option value="Camel Yellow">Camel Yellow</ion-option>
+			      <ion-option value="Cedars Blue Plus 100 SC">Cedars Blue Plus 100 SC</ion-option>
+			      <ion-option value="Cedars Plus FF">Cedars Plus FF</ion-option>
+			      <ion-option value="Cedars Plus Silver">Cedars Plus Silver</ion-option>
+			      <ion-option value="Cedars Plus 100 SC">Cedars Plus 100 SC</ion-option>
+			      <ion-option value="Cedars soft 100s">Cedars soft 100s</ion-option>
+			      <ion-option value="Chesterfield 100 SC">Chesterfield 100 SC</ion-option>
+			      <ion-option value="Chesterfield KS SC">Chesterfield KS SC</ion-option>
+			      <ion-option value="Gauloises Blue">Gauloises Blue</ion-option>
+			      <ion-option value="Gauloises Red">Gauloises Red</ion-option>
+			      <ion-option value="Gauloises Yellow">Gauloises Yellow</ion-option>
+			      <ion-option value="Gitanes Blue">Gitanes Blue</ion-option>
+			      <ion-option value="Gitanes Indigo">Gitanes Indigo</ion-option>
+			      <ion-option value="Gitanes ss">Gitanes ss</ion-option>
+			      <ion-option value="Glamour Menthol">Glamour Menthol</ion-option>
+			      <ion-option value="Glamour Pink">Glamour Pink</ion-option>
+			      <ion-option value="Marlboro 100s">Marlboro 100s</ion-option>
+			      <ion-option value="Marlboro Filter Plus">Marlboro Filter Plus</ion-option>
 			    </ion-select>
 			</ion-item>
 
 			<ion-item class="alignele">
-			<ion-label>How many promotion did you get?</ion-label>
-			    <ion-select [(ngModel)]="mypromotion" formControlName="promotion">
+			<ion-label stacked>Number of chosen promotions *</ion-label>
+			    <ion-select [(ngModel)]="mypromotion" formControlName="promotion" placeholder="None">
 			      <ion-option value="1">None</ion-option>
 			      <ion-option value="2">1</ion-option>
 			      <ion-option value="3">2</ion-option>
@@ -147,40 +137,35 @@
 			</ion-item>
 
 			<ion-item class="alignele">
-			<ion-label>Chosen Promotion 1</ion-label>
-			    <ion-select [(ngModel)]="mypromotion1" formControlName="promotion1">
-			      <ion-option value="1">None</ion-option>
-			      <ion-option value="2">Kent Blue</ion-option>
-			      <ion-option value="3">Kent Silver</ion-option>
-			      <ion-option value="4">Kent Nano</ion-option>
-			      <ion-option value="5">Kent Switch</ion-option>
+			<ion-label stacked>Chosen Promotion 1 *</ion-label>
+			    <ion-select [(ngModel)]="mypromotion1" formControlName="promotion1" placeholder="None">
+			      <ion-option value="None" selected>None</ion-option>
+			      <ion-option value="Kent Blue">Kent Blue</ion-option>
+			      <ion-option value="Kent Silver">Kent Silver</ion-option>
+			      <ion-option value="Kent Nano">Kent Nano</ion-option>
+			      <ion-option value="Kent Switch">Kent Switch</ion-option>
 			    </ion-select>
 			</ion-item>
 
 			<ion-item class="alignele">
-			<ion-label>Chosen Promotion 2</ion-label>
-			    <ion-select [(ngModel)]="mypromotion" formControlName="promotion2">
-			      <ion-option value="1">None</ion-option>
-			      <ion-option value="2">Kent Blue</ion-option>
-			      <ion-option value="3">Kent Silver</ion-option>
-			      <ion-option value="4">Kent Nano</ion-option>
-			      <ion-option value="5">Kent Switch</ion-option>
+			<ion-label stacked>Chosen Promotion 2 *</ion-label>
+			    <ion-select [(ngModel)]="mypromotion2" formControlName="promotion2" placeholder="None">
+            <ion-option value="None" selected>None</ion-option>
+			      <ion-option value="Kent Blue">Kent Blue</ion-option>
+			      <ion-option value="Kent Silver">Kent Silver</ion-option>
+			      <ion-option value="Kent Nano">Kent Nano</ion-option>
+			      <ion-option value="Kent Switch">Kent Switch</ion-option>
 			    </ion-select>
 			</ion-item>
 
 			<ion-label></ion-label>
 
 		</ion-list>
-		
-		
+
+
 	</form>
 
 
 <!-- <button ion-button class="center" [disabled]="!formgroup.valid" click="saveData()">Submit</button> -->
-<button ion-button class="center" click="saveData()">Submit</button>
-<button ion-button class="center" click="loadData()">Submit</button>
-
+<button ion-button class="center" [disabled]="!formgroup.valid" (click)="submit()" [navPush]="homepage">Save</button>
 </ion-content>
-
-
-
