@@ -25,13 +25,12 @@
 		  	<ion-input type="text" [(ngModel)]="myName" formControlName="name" placeholder="John"></ion-input>
       </ion-item>
 
+
       <ion-item class="alignele">
   			<ion-label stacked>Surname *</ion-label>
 		  	<ion-input type="text" [(ngModel)]="mySurname" formControlName="surname" placeholder="Doe"></ion-input>
       </ion-item>
-			<!-- <ion-item *ngIf="surname.hasError('required') && surname.touched">
-				<p>Surname is required </p>
-			</ion-item> -->
+
 
 		<!-- <ion-item>
 		  <ion-label floating>Birthdate</ion-label>
@@ -62,7 +61,7 @@
 			        26-35yo
 			      </ion-segment-button>
 			      <ion-segment-button value="35+" class="btngender">
-			        35+
+			        35yo+
 			      </ion-segment-button>
 			    </ion-segment>
 			</div>
@@ -84,15 +83,16 @@
 		  		<ion-input type="email" [(ngModel)]="myEmail" formControlName="email" placeholder="johndoe@gmail.com"></ion-input>
 			</ion-item>
 
-			<ion-item *ngIf="email.hasError('pattern') && email.touched">
+			<!-- <ion-item *ngIf="email.hasError('pattern') && email.touched">
 				<p>Email is invalid </p>
-			</ion-item>
+			</ion-item> -->
 
 
 			<ion-item class="alignele">
 			    <ion-label stacked>Phone Number *</ion-label>
 			    <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+961 "></ion-input>
 			</ion-item>
+
 
 			<ion-item class="alignele">
 			<ion-label stacked>Brand you usually smoke *</ion-label>
@@ -127,36 +127,54 @@
 			    </ion-select>
 			</ion-item>
 
+
+
 			<ion-item class="alignele">
 			<ion-label stacked>Number of chosen promotions *</ion-label>
 			    <ion-select [(ngModel)]="mypromotion" formControlName="promotion" placeholder="None">
-			      <ion-option value="1">None</ion-option>
-			      <ion-option value="2">1</ion-option>
-			      <ion-option value="3">2</ion-option>
+			      <ion-option value="0">None</ion-option>
+		        <ion-option *ngFor="let n of getNumber(promotionsCount)" [value]="n" >{{n}}</ion-option>
 			    </ion-select>
 			</ion-item>
 
-			<ion-item class="alignele">
+
+      <ion-item class="alignele" *ngFor="let prom of getNumber(promotionsSelected); let i = index">
+        <ion-label>Promotions {{i + 1}}</ion-label>
+        <ion-select [(ngModel)]="promotionsValue[i]" formControlName="promotionX">
+            <ion-option *ngFor="let p of getPromotion(i)" [value]="p.value">{{p.text}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- <ion-item>
+        <ion-label>Promotions</ion-label>
+        <ion-select [(ngModel)]="prom" formControlName="promotions">
+          <ion-option *ngFor="let p of promotions" [value]="p.value">{{p.text}}</ion-option>
+        </ion-select>
+      </ion-item> -->
+
+
+			<!-- <ion-item class="alignele">
 			<ion-label stacked>Chosen Promotion 1 *</ion-label>
 			    <ion-select [(ngModel)]="mypromotion1" formControlName="promotion1" placeholder="None">
-			      <ion-option value="None" selected>None</ion-option>
+			      <ion-option value="None" selected="true">None</ion-option>
 			      <ion-option value="Kent Blue">Kent Blue</ion-option>
 			      <ion-option value="Kent Silver">Kent Silver</ion-option>
 			      <ion-option value="Kent Nano">Kent Nano</ion-option>
 			      <ion-option value="Kent Switch">Kent Switch</ion-option>
 			    </ion-select>
 			</ion-item>
+
 
 			<ion-item class="alignele">
 			<ion-label stacked>Chosen Promotion 2 *</ion-label>
 			    <ion-select [(ngModel)]="mypromotion2" formControlName="promotion2" placeholder="None">
-            <ion-option value="None" selected>None</ion-option>
+            <ion-option value="None" selected="true">None</ion-option>
 			      <ion-option value="Kent Blue">Kent Blue</ion-option>
 			      <ion-option value="Kent Silver">Kent Silver</ion-option>
 			      <ion-option value="Kent Nano">Kent Nano</ion-option>
 			      <ion-option value="Kent Switch">Kent Switch</ion-option>
 			    </ion-select>
-			</ion-item>
+			</ion-item> -->
 
 			<ion-label></ion-label>
 
@@ -168,4 +186,6 @@
 
 <!-- <button ion-button class="center" [disabled]="!formgroup.valid" click="saveData()">Submit</button> -->
 <button ion-button class="center" [disabled]="!formgroup.valid" (click)="submit()" [navPush]="homepage">Save</button>
+<!-- <button ion-button class="center" (click)="submit()" >Save</button> -->
+
 </ion-content>

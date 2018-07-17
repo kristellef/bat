@@ -68,6 +68,9 @@
 	margin-bottom: 3%;
 }
 
+input:invalid {
+  color: pink;
+}
 
 @media screen and (max-width: 800px) {
   .alignele{

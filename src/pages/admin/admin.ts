@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { HTTP } from '@ionic-native/http';
+
 import {CustomerinfoPage} from '../customerinfo/customerinfo';
 import { FirstpagePage } from '../firstpage/firstpage';
 
@@ -23,7 +25,7 @@ export class AdminPage {
 
   forms: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private http: HTTP) {
     this.storage.get('forms').then((val) => {
        this.forms = val;
     });
@@ -41,8 +43,24 @@ export class AdminPage {
     }
   }
 
-  sync(){
-    this.forms = [];
+  resetForms(){
+    this.storage.set('forms', []);
   }
+
+  postRequest() {
+
+      this.http.post("http://bat.kristelle.io/api/forms/add", {data:this.forms}, {
+
+           }
+       )
+        .then(data => {
+            console.log(data);
+            alert('Form synced.')
+        }).catch(error => {
+            console.log(error);
+            alert('Oups, something went wrong... Please try again later.');
+            return;
+        });
+    }
 
 }

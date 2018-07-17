@@ -33,11 +33,16 @@ export class CustomerinfoPage {
   promotion1:AbstractControl;
   promotion2:AbstractControl;
 
+  promotions: Array<any>;
+  promotionsValue: Array<any>;
+
+
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage) {
   	this.formgroup = formbuilder.group({
   		name:['',Validators.compose([
-		Validators.required,
-		Validators.minLength(3)])],
+		Validators.required,])],
   		surname:['',Validators.required],
   		email:['',Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
   		birthdate:[''],
@@ -45,8 +50,10 @@ export class CustomerinfoPage {
   		number:['', Validators.compose([Validators.minLength(8),Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]+$')])],
   		brand:['',Validators.required],
   		promotion:['',Validators.required],
-      promotion1:['None',Validators.required],
-      promotion2:['None',Validators.required]
+      promotionX:['',Validators.required]
+      // promotions:['',Validators.required],
+
+
   	});
 
   	this.name = this.formgroup.controls['name'];
@@ -57,15 +64,53 @@ export class CustomerinfoPage {
   	this.gender = this.formgroup.controls['gender'];
   	this.brand = this.formgroup.controls['brand'];
   	this.promotion = this.formgroup.controls['promotion'];
-    this.promotion1 = this.formgroup.controls['promotion1'];
-    this.promotion2 = this.formgroup.controls['promotion2'];
-  }
+    // this.promotions = this.formgroup.controls['promotion1'];
+    // this.promotion2 = this.formgroup.controls['promotion2'];
+    // this.promotions = this.formgroup.controls['promotions'];
 
+    // this.promotions = [
+    //   { text: 'm', value: 'm' },
+    //   { text: 'c', value: 'c' },
+    //   { text: 'd', value: 'd' },
+    //   { text: 'e', value: 'e' },
+    // ];
+
+      this.promotions = [
+        {
+          promotions: [
+            { text: 'm', value: 'm' },
+            { text: 'c', value: 'c' },
+            { text: 'd', value: 'd' },
+            { text: 'e', value: 'e' }
+          ]
+        },
+        {
+          promotions: [
+            { text: 'm', value: 'm1' },
+            { text: 'c', value: 'c1' },
+            { text: 'd', value: 'd1' },
+            { text: 'e', value: 'e1' }
+          ]
+        },
+        {
+          promotions: [
+            { text: 'm', value: 'm1' },
+            { text: 'c', value: 'c1' },
+            { text: 'd', value: 'd1' },
+            { text: 'e', value: 'e1' }
+          ]
+        }
+      ];
+
+      this.promotionsValue = new Array(this.promotionsCount-1);
+
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomerinfoPage dede');
   }
 
   getFormJson(){
+
     return {
       name: this.name.value,
       surname: this.surname.value,
@@ -74,14 +119,14 @@ export class CustomerinfoPage {
       number: this.number.value,
       gender: this.gender.value,
       brand: this.brand.value,
-      promotion: this.promotion.value,
-      promotion1: this.promotion1.value,
-      promotion2: this.promotion2.value,
+      promotionCount: this.promotion.value,
+      promotions: this.promotionsValue
+      // promotion1: this.promotion1.value,
+      // promotion2: this.promotion2.value,
     }
   }
 
   save() {
-    console.log(this.getFormJson());
 
     // Get the current value and add new one
     this.storage.get('forms').then((val) => {
@@ -97,11 +142,39 @@ export class CustomerinfoPage {
        console.log(val);
      });
   }
-submit(){
-  this.save();
-  alert("Thank you! your form was submitted.");
-}
 
+  submit(){
+    this.save();
+    alert("Thank you! your form was submitted.");
+  }
+
+  getNumber(num) {
+    var list = [];
+    for (var i = 1; i <= num; i++) {
+      list.push(i);
+    }
+    return list;
+  }
+
+  getPromotion(num) {
+    if (this.promotions.length < num) {
+      return [];
+    } else {
+      return this.promotions[num].promotions;
+    }
+  }
+
+  get promotionsCount() {
+    if (this.promotions) {
+      return this.promotions.length;
+    } else {
+      return 0;
+    }
+  }
+
+  get promotionsSelected() {
+    return this.formgroup.controls['promotion'].value;
+  }
 
 
 }
