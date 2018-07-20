@@ -140,7 +140,7 @@
 
       <ion-item class="alignele" *ngFor="let prom of getNumber(promotionsSelected); let i = index">
         <ion-label>Promotions {{i + 1}}</ion-label>
-        <ion-select [(ngModel)]="promotionsValue[i]" formControlName="promotionX">
+        <ion-select [(ngModel)]="promotionsValue[i]" formControlName="promotionX" placeholder="None">
             <ion-option *ngFor="let p of getPromotion(i)" [value]="p.value">{{p.text}}</ion-option>
         </ion-select>
       </ion-item>

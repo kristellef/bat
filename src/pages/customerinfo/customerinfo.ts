@@ -30,8 +30,7 @@ export class CustomerinfoPage {
   number:AbstractControl;
   brand:AbstractControl;
   promotion:AbstractControl;
-  promotion1:AbstractControl;
-  promotion2:AbstractControl;
+  country: String;
 
   promotions: Array<any>;
   promotionsValue: Array<any>;
@@ -50,7 +49,7 @@ export class CustomerinfoPage {
   		number:['', Validators.compose([Validators.minLength(8),Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]+$')])],
   		brand:['',Validators.required],
   		promotion:['',Validators.required],
-      promotionX:['',Validators.required]
+      promotionX:['',Validators.required],
       // promotions:['',Validators.required],
 
 
@@ -64,16 +63,9 @@ export class CustomerinfoPage {
   	this.gender = this.formgroup.controls['gender'];
   	this.brand = this.formgroup.controls['brand'];
   	this.promotion = this.formgroup.controls['promotion'];
-    // this.promotions = this.formgroup.controls['promotion1'];
-    // this.promotion2 = this.formgroup.controls['promotion2'];
-    // this.promotions = this.formgroup.controls['promotions'];
-
-    // this.promotions = [
-    //   { text: 'm', value: 'm' },
-    //   { text: 'c', value: 'c' },
-    //   { text: 'd', value: 'd' },
-    //   { text: 'e', value: 'e' },
-    // ];
+    this.storage.get('country').then((val) => {
+       this.country = val;
+    });
 
       this.promotions = [
         {
@@ -104,10 +96,13 @@ export class CustomerinfoPage {
 
       this.promotionsValue = new Array(this.promotionsCount-1);
 
+
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CustomerinfoPage dede');
+    console.log(this.country);
   }
+
+
 
   getFormJson(){
 
@@ -120,7 +115,8 @@ export class CustomerinfoPage {
       gender: this.gender.value,
       brand: this.brand.value,
       promotionCount: this.promotion.value,
-      promotions: this.promotionsValue
+      promotions: this.promotionsValue,
+      country: this.country,
       // promotion1: this.promotion1.value,
       // promotion2: this.promotion2.value,
     }

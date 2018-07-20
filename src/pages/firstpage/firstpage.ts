@@ -27,4 +27,6 @@ export class FirstpagePage {
     console.log('ionViewDidLoad FirstpagePage');
   }
 
+  
+
 }

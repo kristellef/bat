@@ -10,6 +10,7 @@ import { FirstpagePage } from '../pages/firstpage/firstpage';
 })
 export class MyApp {
   rootPage:any = FirstpagePage;
+  country: string;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

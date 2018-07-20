@@ -23,6 +23,7 @@ export class AdminPage {
   customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
   firstPage=FirstpagePage;
+  country: String;
 
   forms: Array<any>;
 
@@ -30,10 +31,20 @@ export class AdminPage {
     this.storage.get('forms').then((val) => {
        this.forms = val;
     });
+    this.storage.get('country').then((val) => {
+       this.country = val;
+    });
   }
 
   ionViewDidLoad() {
     console.log('Loaded');
+  }
+
+  setLeb(){
+    this.storage.set('country','Lebanon');
+  }
+  setSyria(){
+    this.storage.set('country','Syria');
   }
 
   get formsCount() {
