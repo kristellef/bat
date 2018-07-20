@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { HTTP } from '@ionic-native/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
+
 
 import {CustomerinfoPage} from '../customerinfo/customerinfo';
 import { FirstpagePage } from '../firstpage/firstpage';
@@ -25,7 +26,7 @@ export class AdminPage {
 
   forms: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private http: HTTP) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private http: Http) {
     this.storage.get('forms').then((val) => {
        this.forms = val;
     });
@@ -44,23 +45,29 @@ export class AdminPage {
   }
 
   resetForms(){
-    this.storage.set('forms', []);
-  }
+    this.storage.remove('forms');
+    this.forms = [];
+    return;
+}
 
   postRequest() {
+      let body = {data: this.forms};
 
-      this.http.post("http://bat.kristelle.io/api/forms/add", {data:this.forms}, {
+      var headers = new Headers();
+      headers.append("Accept", 'application/json');
+      headers.append('Content-Type', 'application/json' );
+      let options = new RequestOptions({ headers: headers });
 
-           }
-       )
-        .then(data => {
-            console.log(data);
-            alert('Form synced.')
-        }).catch(error => {
-            console.log(error);
-            alert('Oups, something went wrong... Please try again later.');
-            return;
-        });
-    }
+       this.http.post("http://bat.kristelle.io/api/forms/add", body, options)
+         .subscribe(data => {
+             this.resetForms();
+             alert('Form synced.');
+             return;
+          }, error => {
+              console.log(error);// Error getting the data
+              alert('Oups, something went wrong... Please try again later.');
+              return;
+         });
+        }
 
 }
