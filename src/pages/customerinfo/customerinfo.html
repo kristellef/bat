@@ -51,20 +51,29 @@
 			</div>
 		</ion-item> -->
 
-			<div padding class="alignele">
-				<!-- <h2 style="color:grey">Age</h2> -->
-			  <ion-segment formControlName="birthdate">
-			      <ion-segment-button value="18-25" class="btngender">
-			        18-25yo
-			      </ion-segment-button>
-			      <ion-segment-button value="26-35" class="btngender">
-			        26-35yo
-			      </ion-segment-button>
-			      <ion-segment-button value="35+" class="btngender">
-			        35yo+
-			      </ion-segment-button>
-			    </ion-segment>
-			</div>
+    <div padding class="alignele">
+      <!-- <h2 style="color:grey">Age</h2> -->
+      <ion-segment formControlName="birthdate" *ngIf="this.country=='Lebanon'">
+          <ion-segment-button value="18-25" class="btngender">
+            <30yo
+          </ion-segment-button>
+          <ion-segment-button value="26-35" class="btngender">
+            >30yo
+          </ion-segment-button>
+        </ion-segment>
+
+        <ion-segment formControlName="birthdate" *ngIf="this.country=='Syria'">
+            <ion-segment-button value="18-25" class="btngender">
+              18-25yo
+            </ion-segment-button>
+            <ion-segment-button value="26-35" class="btngender">
+              26-35yo
+            </ion-segment-button>
+            <ion-segment-button value="35+" class="btngender">
+              35yo+
+            </ion-segment-button>
+          </ion-segment>
+    </div>
 
 			<div padding class="alignele">
 				<!-- <h2 style="color:grey">Gender</h2> -->
@@ -83,14 +92,13 @@
 		  		<ion-input type="email" [(ngModel)]="myEmail" formControlName="email" placeholder="johndoe@gmail.com"></ion-input>
 			</ion-item>
 
-			<!-- <ion-item *ngIf="email.hasError('pattern') && email.touched">
-				<p>Email is invalid </p>
-			</ion-item> -->
-
-
-			<ion-item class="alignele">
+			<ion-item class="alignele" *ngIf="this.country=='Lebanon'">
 			    <ion-label stacked>Phone Number *</ion-label>
 			    <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+961 "></ion-input>
+			</ion-item>
+      <ion-item class="alignele" *ngIf="this.country=='Syria'">
+			    <ion-label stacked>Phone Number *</ion-label>
+			    <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+963 "></ion-input>
 			</ion-item>
 
 
@@ -145,36 +153,9 @@
         </ion-select>
       </ion-item>
 
-      <!-- <ion-item>
-        <ion-label>Promotions</ion-label>
-        <ion-select [(ngModel)]="prom" formControlName="promotions">
-          <ion-option *ngFor="let p of promotions" [value]="p.value">{{p.text}}</ion-option>
-        </ion-select>
-      </ion-item> -->
 
 
-			<!-- <ion-item class="alignele">
-			<ion-label stacked>Chosen Promotion 1 *</ion-label>
-			    <ion-select [(ngModel)]="mypromotion1" formControlName="promotion1" placeholder="None">
-			      <ion-option value="None" selected="true">None</ion-option>
-			      <ion-option value="Kent Blue">Kent Blue</ion-option>
-			      <ion-option value="Kent Silver">Kent Silver</ion-option>
-			      <ion-option value="Kent Nano">Kent Nano</ion-option>
-			      <ion-option value="Kent Switch">Kent Switch</ion-option>
-			    </ion-select>
-			</ion-item>
 
-
-			<ion-item class="alignele">
-			<ion-label stacked>Chosen Promotion 2 *</ion-label>
-			    <ion-select [(ngModel)]="mypromotion2" formControlName="promotion2" placeholder="None">
-            <ion-option value="None" selected="true">None</ion-option>
-			      <ion-option value="Kent Blue">Kent Blue</ion-option>
-			      <ion-option value="Kent Silver">Kent Silver</ion-option>
-			      <ion-option value="Kent Nano">Kent Nano</ion-option>
-			      <ion-option value="Kent Switch">Kent Switch</ion-option>
-			    </ion-select>
-			</ion-item> -->
 
 			<ion-label></ion-label>
 

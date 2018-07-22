@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {AdminPage} from '../admin/admin';
 import {CustomerinfoPage} from '../customerinfo/customerinfo';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the FirstpagePage page.
@@ -20,13 +21,27 @@ export class FirstpagePage {
   customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
   homePage = HomePage;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  country = String;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    this.storage.get('country').then((val) => {
+       this.country = val;
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FirstpagePage');
+    console.log("firstPage");
   }
 
-  
+  selectCountry(){
+    console.log(this.country);
+    if (this.country == 'Lebanon' || this.country == 'Syria'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 
 }
