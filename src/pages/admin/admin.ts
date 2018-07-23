@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 
-import {CustomerinfoPage} from '../customerinfo/customerinfo';
+import { CustomerinfoPage } from '../customerinfo/customerinfo';
 import { FirstpagePage } from '../firstpage/firstpage';
 
 /**
@@ -22,29 +22,75 @@ import { FirstpagePage } from '../firstpage/firstpage';
 export class AdminPage {
   customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
-  firstPage=FirstpagePage;
+  firstPage = FirstpagePage;
   country: String;
 
   forms: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private http: Http) {
-    this.storage.get('forms').then((val) => {
-       this.forms = val;
-    });
-    this.storage.get('country').then((val) => {
-       this.country = val;
-    });
+    this.refreshCountry();
+    this.refreshForms();
+  }
+
+
+  ionViewWillEnter() {
+    this.refreshCountry();
+    this.refreshForms();
   }
 
   ionViewDidLoad() {
-    console.log('Loaded');
+    this.refreshCountry();
+    this.refreshForms();
   }
 
-  setLeb(){
-    this.storage.set('country','Lebanon');
+  refreshCountry() {
+    // Refresh Country value
+    this.storage.get('country').then((val) => {
+      this.country = val;
+    });
+
+    console.log('Country found on admin page:' + this.country);
   }
-  setSyria(){
-    this.storage.set('country','Syria');
+
+  refreshForms() {
+    // Refresh Country value
+    this.storage.get('forms').then((val) => {
+      this.forms = val;
+    });
+
+    console.log(this.forms);
+  }
+
+  refreshPromotions() {
+    var headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.get("https://bat.kristelle.io/api/promotions", options)
+      .subscribe(data => {
+        let promotions = JSON.parse(data._body)
+        console.log(promotions);
+        this.storage.set('promotions',promotions.data);
+        alert('Promotions updated.');
+        return;
+      }, error => {
+        console.log(error);// Error getting the data
+        alert('Oups, something went wrong... Please try again later.');
+        return;
+      });
+  }
+
+
+  setLeb() {
+    this.storage.set('country', 'Lebanon');
+    this.country = 'Lebanon';
+    alert('Country set to Lebanon.');
+  }
+  setSyria() {
+    this.storage.set('country', 'Syria');
+    this.country = 'Syria';
+    alert('Country set to Syria.');
   }
 
   get formsCount() {
@@ -55,30 +101,30 @@ export class AdminPage {
     }
   }
 
-  resetForms(){
+  resetForms() {
     this.storage.remove('forms');
     this.forms = [];
     return;
-}
+  }
 
   postRequest() {
-      let body = {data: this.forms};
+    let body = { data: this.forms };
 
-      var headers = new Headers();
-      headers.append("Accept", 'application/json');
-      headers.append('Content-Type', 'application/json' );
-      let options = new RequestOptions({ headers: headers });
+    var headers = new Headers();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
 
-       this.http.post("http://bat.kristelle.io/api/forms/add", body, options)
-         .subscribe(data => {
-             this.resetForms();
-             alert('Form synced.');
-             return;
-          }, error => {
-              console.log(error);// Error getting the data
-              alert('Oups, something went wrong... Please try again later.');
-              return;
-         });
-        }
+    this.http.post("https://bat.kristelle.io/api/forms/add", body, options)
+      .subscribe(data => {
+        this.resetForms();
+        alert('Form synced.');
+        return;
+      }, error => {
+        console.log(error);// Error getting the data
+        alert('Oups, something went wrong... Please try again later.');
+        return;
+      });
+  }
 
 }

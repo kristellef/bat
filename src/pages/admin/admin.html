@@ -28,11 +28,15 @@
 
     <div style="width:100%">
       <p style="font-size:20px">{{formsCount}} unsynced forms</p>
-      <button ion-button class="center" (click)='postRequest()'>Sync</button>
-
+      <button ion-button class="center" (click)='postRequest()'>Sync. forms</button>
+      <button ion-button class="center" (click)='refreshPromotions()'>Refresh Promotions</button>
       <div class="center2">
-        <button ion-button clear (click)="setLeb()"><img src="assets/imgs/lebanon (1).png"></button>
-        <button ion-button clear (click)="setSyria()"><img src="assets/imgs/syria (2).png"></button>
+        <button ion-button clear (click)="setLeb()">
+            <img [ngClass]="{'gray':country=='Syria' }" src="assets/imgs/lebanon (1).png">
+        </button>
+        <button ion-button clear (click)="setSyria()">
+            <img [ngClass]="{'gray':country=='Lebanon' }" src="assets/imgs/syria (2).png">
+        </button>
       </div>
 
     </div>

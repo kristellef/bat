@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {HomePage} from '../home/home';
-import {AdminPage} from '../admin/admin';
-import {CustomerinfoPage} from '../customerinfo/customerinfo';
+import { HomePage } from '../home/home';
+import { AdminPage } from '../admin/admin';
+import { CustomerinfoPage } from '../customerinfo/customerinfo';
 import { Storage } from '@ionic/storage';
 
 /**
@@ -21,27 +21,57 @@ export class FirstpagePage {
   customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
   homePage = HomePage;
-  country = String;
+  country: String;
+  promotions: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
-    this.storage.get('country').then((val) => {
-       this.country = val;
-    });
+    this.refreshCountry();
+    this.refreshPromotions();
+  }
+
+  ionViewWillEnter() {
+    this.refreshCountry();
+    this.refreshPromotions();
   }
 
   ionViewDidLoad() {
-    console.log("firstPage");
+    this.refreshCountry();
+    this.refreshPromotions();
   }
 
-  selectCountry(){
-    console.log(this.country);
-    if (this.country == 'Lebanon' || this.country == 'Syria'){
-      return true;
-    }
-    else{
-      return false;
-    }
+  refreshCountry() {
+    // Refresh Country value
+    this.storage.get('country').then((val) => {
+      this.country = val;
+    });
+
+    console.log('Country found on firstpage page:' + this.country);
   }
 
+  refreshPromotions() {
+      // Refresh Country value
+      this.storage.get('promotions').then((val) => {
+        this.promotions = val;
+      });
+
+      console.log('Promotions refreshed.',this.promotions);
+  }
+
+  get formAccess() {
+    // we want the country to be either Lebanon or Syria
+    let access = true;
+
+    if (this.country != 'Lebanon' && this.country != 'Syria') {
+      access = false;
+    }
+
+    // We want formt to be loaded
+    if (this.promotions == null || this.promotions == undefined){
+      console.log(this.promotions);
+      access = false;
+    }
+    return access;
+
+  }
 
 }
