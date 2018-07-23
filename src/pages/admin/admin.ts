@@ -69,7 +69,7 @@ export class AdminPage {
 
     this.http.get("https://bat.kristelle.io/api/promotions", options)
       .subscribe(data => {
-        let promotions = JSON.parse(data._body)
+        let promotions = JSON.parse((<any>data)._body)
         console.log(promotions);
         this.storage.set('promotions',promotions.data);
         alert('Promotions updated.');
