@@ -25,7 +25,6 @@
         <preference name="SplashShowOnlyFirstTime" value="true" />
         <icon density="ldpi" src="resources/android/icon/ldpi.png" />
         <icon density="mdpi" src="resources/android/icon/mdpi.png" />
-        <icon density="hdpi" src="resources/android/icon/hdpi.png" />
         <icon density="xhdpi" src="resources/android/icon/xhdpi.png" />
         <icon density="xxhdpi" src="resources/android/icon/xxhdpi.png" />
         <icon density="xxxhdpi" src="resources/android/icon/xxxhdpi.png" />
