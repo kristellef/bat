@@ -75,8 +75,8 @@ export class AdminPage {
         alert('Promotions updated.');
         return;
       }, error => {
-        console.log(error);// Error getting the data
         alert('Oups, something went wrong... Please try again later.');
+        alert('DEBUG:'+error);
         return;
       });
   }
