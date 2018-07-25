@@ -123,8 +123,8 @@
 
 
       <ion-item class="alignele" *ngFor="let prom of getNumber(promotionsSelected); let i = index">
-        <ion-label>Promotion {{i + 1}}</ion-label>
-        <ion-select [(ngModel)]="promotionsValue[promotions[i].id]" formControlName="promotionX" placeholder="None">
+        <ion-label>Promotions {{i + 1}}</ion-label>
+        <ion-select [(ngModel)]="promotionsValue[promotions[i].id.toString()]" formControlName="promotionX" placeholder="None">
           <ion-option *ngFor="let p of getOptions(i)" [value]="p">{{p}}</ion-option>
         </ion-select>
       </ion-item>

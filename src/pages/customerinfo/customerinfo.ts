@@ -33,7 +33,7 @@ export class CustomerinfoPage {
   country: String;
 
   promotions: Array<any>;
-  promotionsValue: Array<any>;
+  promotionsValue: Object;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage) {
     this.formgroup = formbuilder.group({
@@ -77,8 +77,10 @@ export class CustomerinfoPage {
       // Refresh Country value
       this.storage.get('promotions').then((val) => {
         this.promotions = val;
-        this.promotionsValue = new Array(this.promotionsCount - 1);
-        console.log('Promotions refreshed.',this.promotions);
+        this.promotionsValue = {};
+        for(let i =0; i<this.promotions.length;i++){
+            this.promotionsValue[this.promotions[i].id.toString()] = null;
+        }
       });
   }
 
@@ -90,7 +92,6 @@ export class CustomerinfoPage {
   }
 
   getFormJson() {
-
     return {
       name: this.name.value,
       surname: this.surname.value,
