@@ -107,6 +107,7 @@ export class CustomerinfoPage {
   }
 
   save() {
+      console.log(this.mypromotion);return;
     // Get the current value and add new one
     this.storage.get('forms').then((val) => {
       if (val == null) val = [];
@@ -146,6 +147,14 @@ export class CustomerinfoPage {
   get promotionsCount() {
     if (this.promotions) {
       return this.promotions.length;
+    } else {
+      return 0;
+    }
+  }
+
+  get selectedPromotionsCount() {
+    if (this.mypromotion) {
+      return this.mypromotion.length;
     } else {
       return 0;
     }

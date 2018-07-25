@@ -67,7 +67,7 @@ export class AdminPage {
     headers.append('Content-Type', 'application/json');
     let options = new RequestOptions({ headers: headers });
 
-    this.http.get("http://bat.nahum/api/promotions", options)
+    this.http.get("https://bat.kristelle.io/api/promotions", options)
       .subscribe(data => {
         let promotions = JSON.parse((<any>data)._body)
         console.log(promotions);
@@ -115,7 +115,7 @@ export class AdminPage {
     headers.append('Content-Type', 'application/json');
     let options = new RequestOptions({ headers: headers });
 
-    this.http.post("http://bat.nahum/api/forms/add", body, options)
+    this.http.post("https://bat.kristelle.io/api/forms/add", body, options)
       .subscribe(data => {
         this.resetForms();
         alert('Form synced.');

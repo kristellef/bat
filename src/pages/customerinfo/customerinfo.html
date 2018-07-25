@@ -118,16 +118,15 @@
 
 
       <ion-item class="alignele">
-        <ion-label stacked>Number of chosen promotions *</ion-label>
-        <ion-select [(ngModel)]="mypromotion" formControlName="promotion" placeholder="None">
-          <ion-option value="0">None</ion-option>
-          <ion-option *ngFor="let n of getNumber(promotionsCount)" [value]="n">{{n}}</ion-option>
+        <ion-label stacked>Chosen promotions *</ion-label>
+        <ion-select [(ngModel)]="mypromotion" formControlName="promotion" placeholder="None" multiple="true">
+          <ion-option *ngFor="let n of promotions" [value]="n">{{n.name}}</ion-option>
         </ion-select>
       </ion-item>
 
 
-      <ion-item class="alignele" *ngFor="let prom of getNumber(promotionsSelected); let i = index">
-        <ion-label>Promotions {{i + 1}}</ion-label>
+      <ion-item class="alignele" *ngFor="let prom of getNumber(selectedPromotionsCount); let i = index">
+        <ion-label>Promotions "{{promotions[i].name}}"</ion-label>
         <ion-select [(ngModel)]="promotionsValue[promotions[i].id.toString()]" formControlName="promotionX" placeholder="None">
           <ion-option *ngFor="let p of getOptions(i)" [value]="p">{{p}}</ion-option>
         </ion-select>
