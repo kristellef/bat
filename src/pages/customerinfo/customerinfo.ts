@@ -70,6 +70,7 @@ export class CustomerinfoPage {
   ionViewDidLoad() {
     this.refreshCountry();
     this.refreshPromotions();
+    console.log(this.promotions);
   }
 
   refreshPromotions() {
