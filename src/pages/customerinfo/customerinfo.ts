@@ -120,6 +120,7 @@ export class CustomerinfoPage {
     for (let i = 0; i < this.selectedPromotionsCount; i++) {
       this.promotionsValue[this.promotionsSelected[i].id.toString()] = null;
     }
+    console.log(this.promotionsSelected);
   }
 
   getNumber(num) {

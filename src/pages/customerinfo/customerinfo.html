@@ -126,7 +126,7 @@
 
 
       <ion-item class="alignele" *ngFor="let prom of getNumber(selectedPromotionsCount); let i = index">
-        <ion-label>Promotions "{{promotions[i].name}}"</ion-label>
+        <ion-label>Promotions "{{promotionsSelected[i].name}}"</ion-label>
         <ion-select [(ngModel)]="promotionsValue[promotionsSelected[i].id.toString()]" [ngModelOptions]="{standalone: true}" placeholder="None">
           <ion-option *ngFor="let p of getOptions(i)" [value]="p">{{p}}</ion-option>
         </ion-select>
@@ -141,6 +141,6 @@
 
   <!-- <button ion-button class="center"  (click)="submit()" >Save</button> -->
 
-  <button ion-button class="center" [disabled]="!submittable" (click)="submit()" [navPush]="homepage">Save</button>
+  <button ion-button class="center" [disabled]="!submittable()" (click)="submit()" [navPush]="homepage">Save</button>
 
 </ion-content>
