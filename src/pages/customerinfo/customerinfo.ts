@@ -37,8 +37,7 @@ export class CustomerinfoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage) {
     this.formgroup = formbuilder.group({
-      name: ['', Validators.compose([
-        Validators.required,])],
+      name: ['', Validators.compose([Validators.required,])],
       surname: ['', Validators.required],
       email: ['', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
       birthdate: [''],
@@ -46,7 +45,6 @@ export class CustomerinfoPage {
       number: ['', Validators.compose([Validators.minLength(8), Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]+$')])],
       brand: ['', Validators.required],
       promotion: ['', Validators.required],
-      promotionX: ['', Validators.required],
     });
 
     this.name = this.formgroup.controls['name'];
@@ -74,14 +72,11 @@ export class CustomerinfoPage {
   }
 
   refreshPromotions() {
-      // Refresh Country value
-      this.storage.get('promotions').then((val) => {
-        this.promotions = val;
-        this.promotionsValue = {};
-        for(let i =0; i<this.promotions.length;i++){
-            this.promotionsValue[this.promotions[i].id.toString()] = null;
-        }
-      });
+    // Refresh Country value
+    this.storage.get('promotions').then((val) => {
+      this.promotions = val;
+      this.promotionsValue = {};
+    });
   }
 
   refreshCountry() {
@@ -100,14 +95,13 @@ export class CustomerinfoPage {
       number: this.number.value,
       gender: this.gender.value,
       brand: this.brand.value,
-      promotionCount: this.promotion.value,
+      promotionCount: this.selectedPromotionsCount,
       promotions: this.promotionsValue,
       country: this.country,
     }
   }
 
   save() {
-      console.log(this.mypromotion);return;
     // Get the current value and add new one
     this.storage.get('forms').then((val) => {
       if (val == null) val = [];
@@ -124,8 +118,16 @@ export class CustomerinfoPage {
   }
 
   submit() {
+    console.log(this.getFormJson()); return;
     this.save();
     alert("Thank you! your form was submitted.");
+  }
+
+  chosePromotion(value) {
+    this.promotionsValue = {};
+    for (let i = 0; i < this.selectedPromotionsCount; i++) {
+      this.promotionsValue[this.promotionsSelected[i].id.toString()] = null;
+    }
   }
 
   getNumber(num) {
@@ -153,16 +155,26 @@ export class CustomerinfoPage {
   }
 
   get selectedPromotionsCount() {
-    if (this.mypromotion) {
-      return this.mypromotion.length;
+    if (this.promotion.value) {
+      return this.promotion.value.length;
     } else {
       return 0;
     }
   }
 
   get promotionsSelected() {
-    return this.formgroup.controls['promotion'].value;
+    return this.promotion.value;
   }
 
+  submittable() {
+    for (var property in this.promotionsValue) {
+      if (this.promotionsValue.hasOwnProperty(property)) {
+        if (this.promotionsValue[property] == null) {
+            return false;
+        }
+      }
+    }
+    return this.formgroup.valid;
+  }
 
 }
