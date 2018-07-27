@@ -68,7 +68,6 @@ export class CustomerinfoPage {
   ionViewDidLoad() {
     this.refreshCountry();
     this.refreshPromotions();
-    console.log(this.promotions);
   }
 
   refreshPromotions() {
@@ -111,14 +110,7 @@ export class CustomerinfoPage {
     });
   }
 
-  load() {
-    this.storage.get('forms').then((val) => {
-      console.log(val);
-    });
-  }
-
   submit() {
-    console.log(this.getFormJson()); return;
     this.save();
     alert("Thank you! your form was submitted.");
   }
