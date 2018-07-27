@@ -78,44 +78,10 @@
         <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+963 "></ion-input>
       </ion-item>
 
-      <ion-item class="alignele" *ngIf="this.country=='Syria'">
+      <ion-item class="alignele">
         <ion-label stacked>Brand you usually smoke *</ion-label>
         <ion-input type="text" [(ngModel)]="mybrand" formControlName="brand" placeholder="None"></ion-input>
       </ion-item>
-
-      <ion-item class="alignele" *ngIf="this.country=='Lebanon'">
-        <ion-label stacked>Brand you usually smoke *</ion-label>
-        <ion-select [(ngModel)]="mybrand" formControlName="brand" placeholder="None">
-          <ion-option value="Allure Black KS">Allure Black KS</ion-option>
-          <ion-option value="Allure Black SS">Allure Black SS</ion-option>
-          <ion-option value="Allure White KS">Allure White KS</ion-option>
-          <ion-option value="Allure White SS">Allure White SS</ion-option>
-          <ion-option value="Bond 100 SC">Bond 100 SC</ion-option>
-          <ion-option value="Bond Blue SS">Bond Blue SS</ion-option>
-          <ion-option value="Brilliant Blue">Brilliant Blue</ion-option>
-          <ion-option value="Brilliant SS">Brilliant SS</ion-option>
-          <ion-option value="Camel Blue">Camel Blue</ion-option>
-          <ion-option value="Camel Yellow">Camel Yellow</ion-option>
-          <ion-option value="Cedars Blue Plus 100 SC">Cedars Blue Plus 100 SC</ion-option>
-          <ion-option value="Cedars Plus FF">Cedars Plus FF</ion-option>
-          <ion-option value="Cedars Plus Silver">Cedars Plus Silver</ion-option>
-          <ion-option value="Cedars Plus 100 SC">Cedars Plus 100 SC</ion-option>
-          <ion-option value="Cedars soft 100s">Cedars soft 100s</ion-option>
-          <ion-option value="Chesterfield 100 SC">Chesterfield 100 SC</ion-option>
-          <ion-option value="Chesterfield KS SC">Chesterfield KS SC</ion-option>
-          <ion-option value="Gauloises Blue">Gauloises Blue</ion-option>
-          <ion-option value="Gauloises Red">Gauloises Red</ion-option>
-          <ion-option value="Gauloises Yellow">Gauloises Yellow</ion-option>
-          <ion-option value="Gitanes Blue">Gitanes Blue</ion-option>
-          <ion-option value="Gitanes Indigo">Gitanes Indigo</ion-option>
-          <ion-option value="Gitanes ss">Gitanes ss</ion-option>
-          <ion-option value="Glamour Menthol">Glamour Menthol</ion-option>
-          <ion-option value="Glamour Pink">Glamour Pink</ion-option>
-          <ion-option value="Marlboro 100s">Marlboro 100s</ion-option>
-          <ion-option value="Marlboro Filter Plus">Marlboro Filter Plus</ion-option>
-        </ion-select>
-      </ion-item>
-
 
       <ion-item class="alignele">
         <ion-label stacked>Chosen promotions *</ion-label>
