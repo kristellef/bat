@@ -135,7 +135,7 @@ export class CustomerinfoPage {
     if (this.promotions.length < num) {
       return [];
     } else {
-      return this.promotions[num].options;
+      return this.promotionsSelected[num].options;
     }
   }
 
@@ -159,7 +159,7 @@ export class CustomerinfoPage {
     return this.promotion.value;
   }
 
-  submittable() {
+  get submittable() {
     for (var property in this.promotionsValue) {
       if (this.promotionsValue.hasOwnProperty(property)) {
         if (this.promotionsValue[property] == null) {
@@ -167,6 +167,7 @@ export class CustomerinfoPage {
         }
       }
     }
+    console.log('wtf')
     return this.formgroup.valid;
   }
 
