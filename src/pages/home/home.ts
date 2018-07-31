@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 import {CustomerinfoPage} from '../customerinfo/customerinfo';
 import {AdminPage} from '../admin/admin';
 import { FirstpagePage } from '../firstpage/firstpage';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -12,6 +13,12 @@ export class HomePage {
 	customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
   firstPage = FirstpagePage;
-	constructor(public navCtrl: NavController) {
+  country = String;
+	constructor(public navCtrl: NavController, private storage: Storage,) {
+  }
+  ionViewDidLoad() {
+    this.storage.get('country').then((val) => {
+      this.country = val;
+    });
   }
 }
