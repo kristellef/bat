@@ -67,7 +67,6 @@ export class FirstpagePage {
 
     // We want formt to be loaded
     if (this.promotions == null || this.promotions == undefined){
-      console.log(this.promotions);
       access = false;
     }
     return access;

@@ -88,3 +88,16 @@ input:invalid {
 	margin-top: 2%;
 }
 }
+
+.input-prefix {
+	color: black !important;
+	font-size: 17px !important;
+	margin-top: 37px !important;
+	margin-right: 5px !important;
+	position: absolute !important;
+	top: 0px !important;
+}
+
+.has-prefix {
+	padding-left: 60px !important;
+}

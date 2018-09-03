@@ -33,16 +33,35 @@ export class CustomerinfoPage {
   country: String;
 
   promotions: Array<any>;
-  promotionsValue: Object;
+  promotionId: Number;
+  promotionItem1: String;
+  promotionItem2: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage) {
+    this.refreshPromotions();
+    this.refreshCountry();
+
+    let regexPhone='';
+    let phoneLength = 0;
+    if (this.country=='Lebanon') {
+        regexPhone = '/\d{8}/';
+        phoneLength = 8;
+    } else if (this.country=='Syria') {
+        regexPhone = '/\d{9}/';
+        phoneLength = 9;
+    }
+
     this.formgroup = formbuilder.group({
       name: ['', Validators.compose([Validators.required,])],
       surname: ['', Validators.required],
       email: ['', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
       birthdate: [''],
       gender: [''],
-      number: ['', Validators.compose([Validators.minLength(8), Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]+$')])],
+      number: ['', Validators.compose(
+          [
+                Validators.required,
+                Validators.pattern(regexPhone)
+            ])],
       brand: ['', Validators.required],
       promotion: ['', Validators.required],
     });
@@ -55,9 +74,6 @@ export class CustomerinfoPage {
     this.gender = this.formgroup.controls['gender'];
     this.brand = this.formgroup.controls['brand'];
     this.promotion = this.formgroup.controls['promotion'];
-
-    this.refreshPromotions();
-    this.refreshCountry();
   }
 
   ionViewWillEnter() {
@@ -74,7 +90,7 @@ export class CustomerinfoPage {
     // Refresh Country value
     this.storage.get('promotions').then((val) => {
       this.promotions = val;
-      this.promotionsValue = {};
+      this.promotionId = null;
     });
   }
 
@@ -85,17 +101,26 @@ export class CustomerinfoPage {
     });
   }
 
+  getPhoneValue() {
+      if (this.country=='Lebanon') {
+          return '+961' + this.number.value;
+      } else if (this.country=='Syria') {
+          return '+963' + this.number.value;
+      }
+  }
+
   getFormJson() {
     return {
       name: this.name.value,
       surname: this.surname.value,
       email: this.email.value,
       birthdate: this.birthdate.value,
-      number: this.number.value,
+      number: this.getPhoneValue(),
       gender: this.gender.value,
       brand: this.brand.value,
-      promotionCount: this.selectedPromotionsCount,
-      promotions: this.promotionsValue,
+      promotion: this.promotion.value.id,
+      promotionItem1: this.promotionItem1,
+      promotionItem2: this.promotionItem2,
       country: this.country,
     }
   }
@@ -115,59 +140,16 @@ export class CustomerinfoPage {
     alert("Thank you! your form was submitted.");
   }
 
-  chosePromotion(value) {
-    this.promotionsValue = {};
-    for (let i = 0; i < this.selectedPromotionsCount; i++) {
-      this.promotionsValue[this.promotionsSelected[i].id.toString()] = null;
-    }
-    console.log(this.promotionsSelected);
-  }
-
-  getNumber(num) {
-    var list = [];
-    for (var i = 1; i <= num; i++) {
-      list.push(i);
-    }
-    return list;
-  }
-
-  getOptions(num) {
-    if (this.promotions.length < num) {
-      return [];
-    } else {
-      return this.promotionsSelected[num].options;
-    }
-  }
-
-  get promotionsCount() {
-    if (this.promotions) {
-      return this.promotions.length;
-    } else {
-      return 0;
-    }
-  }
-
-  get selectedPromotionsCount() {
-    if (this.promotion.value) {
-      return this.promotion.value.length;
-    } else {
-      return 0;
-    }
-  }
-
-  get promotionsSelected() {
-    return this.promotion.value;
+  chosePromotion() {
+    this.promotionItem1 = null;
+    this.promotionItem2 = null;
   }
 
   get submittable() {
-    for (var property in this.promotionsValue) {
-      if (this.promotionsValue.hasOwnProperty(property)) {
-        if (this.promotionsValue[property] == null) {
-            return false;
-        }
-      }
+    if (this.promotionItem1 == null) {
+        return false;
     }
-    console.log('wtf')
+
     return this.formgroup.valid;
   }
 

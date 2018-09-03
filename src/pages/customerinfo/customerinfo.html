@@ -71,11 +71,14 @@
 
       <ion-item class="alignele" *ngIf="this.country=='Lebanon'">
         <ion-label stacked>Phone Number *</ion-label>
-        <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+961 "></ion-input>
+        <p item-left class='input-prefix'>+961</p>
+        <ion-input class="has-prefix" type="number" minlength="8" maxlength="8" formControlName="number" placeholder="12345678"></ion-input>
       </ion-item>
       <ion-item class="alignele" *ngIf="this.country=='Syria'">
         <ion-label stacked>Phone Number *</ion-label>
-        <ion-input type="text" [(ngModel)]="myNum" formControlName="number" placeholder="+963 "></ion-input>
+        <p item-left class='input-prefix'>+963(0)</p>
+
+        <ion-input class="has-prefix" type="number" minlength="9" maxlength="9" formControlName="number" placeholder="123456789"></ion-input>
       </ion-item>
 
       <ion-item class="alignele">
@@ -85,16 +88,27 @@
 
       <ion-item class="alignele">
         <ion-label stacked>Chosen promotions *</ion-label>
-        <ion-select formControlName="promotion" placeholder="None" multiple="true" (ionChange)="chosePromotion(promotion.value)">
+        <ion-select formControlName="promotion" placeholder="None" (ionChange)="chosePromotion()">
           <ion-option *ngFor="let n of promotions" [value]="n">{{n.name}}</ion-option>
         </ion-select>
       </ion-item>
 
 
-      <ion-item class="alignele" *ngFor="let prom of getNumber(selectedPromotionsCount); let i = index">
-        <ion-label>Promotions "{{promotionsSelected[i].name}}"</ion-label>
-        <ion-select [(ngModel)]="promotionsValue[promotionsSelected[i].id.toString()]" [ngModelOptions]="{standalone: true}" placeholder="None">
-          <ion-option *ngFor="let p of getOptions(i)" [value]="p">{{p}}</ion-option>
+      <ion-item class="alignele" *ngIf= "promotion.value != null && promotion.value != ''">
+        <ion-label>Promotions "{{promotion.value.name}}"</ion-label>
+        <ion-select [(ngModel)]="promotionItem1"
+        [ngModelOptions]="{standalone: true}"
+        placeholder="None">
+          <ion-option *ngFor="let p of promotion.value.options" [value]="p">{{p}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="alignele" *ngIf= "promotionItem1 != null">
+        <ion-label>Promotions "{{promotion.value.name}}"</ion-label>
+        <ion-select [(ngModel)]="promotionItem2"
+        [ngModelOptions]="{standalone: true}"
+        placeholder="None">
+          <ion-option *ngFor="let p of promotion.value.options" [value]="p">{{p}}</ion-option>
         </ion-select>
       </ion-item>
 
