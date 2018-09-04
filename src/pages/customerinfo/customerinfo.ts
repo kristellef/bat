@@ -42,13 +42,10 @@ export class CustomerinfoPage {
     this.refreshCountry();
 
     let regexPhone='';
-    let phoneLength = 0;
     if (this.country=='Lebanon') {
         regexPhone = '/\d{8}/';
-        phoneLength = 8;
     } else if (this.country=='Syria') {
         regexPhone = '/\d{9}/';
-        phoneLength = 9;
     }
 
     this.formgroup = formbuilder.group({
