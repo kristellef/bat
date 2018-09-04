@@ -17,12 +17,18 @@
 
  <ion-grid style="height: 100%">
     <ion-row justify-content-center align-items-center style="height: 100%">
-     <div>
+     <div *ngIf="this.country=='Lebanon'">
   <img src="assets/imgs/logo.png" class="logo">
     <p style="text-align:center; margin-top:10px; font-size:20px">Are you a smoker over 18?</p>
     <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
     <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
   </div>
+  <div *ngIf="this.country=='Syria'">
+<img src="assets/imgs/1970lionlogo.png" class="logoSyria">
+ <p style="text-align:center; margin-top:10px; font-size:20px">Are you a smoker over 18?</p>
+ <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
+ <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
+</div>
     </ion-row>
   </ion-grid>
 
