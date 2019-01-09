@@ -6,12 +6,12 @@
 -->
 <ion-header>
   <ion-navbar>
-  <!-- <button ion-button clear [navPush]="firstPage"><ion-icon name="arrow-back" style="color: #FF9900"></ion-icon></button> -->
-</ion-navbar>
+    <!-- <button ion-button clear [navPush]="firstPage"><ion-icon name="arrow-back" style="color: #FF9900"></ion-icon></button> -->
+  </ion-navbar>
 </ion-header>
 
 
-  <ion-content padding class="back">
+<ion-content padding class="back">
   <!-- <ion-card>
 
     <ion-card-content>
@@ -23,24 +23,47 @@
 
   </ion-card> -->
 
-   <ion-grid style="height: 100%">
-      <ion-row justify-content-center align-items-center style="height: 100%">
+  <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 100%">
 
-    <div style="width:100%">
-      <p style="font-size:20px">{{formsCount}} unsynced forms</p>
-      <button ion-button class="center" (click)='postRequest()'> <ion-icon name="sync"></ion-icon> &nbsp; Forms</button>
-      <button ion-button class="center" (click)='refreshPromotions()'> <ion-icon ios="ios-download-outline" md="md-download"></ion-icon> &nbsp; Promotions</button>
-      <div class="center2">
-        <button ion-button clear (click)="setLeb()">
-            <img [ngClass]="{'gray':country=='Syria' }" src="assets/imgs/lebanon (1).png">
-        </button>
-        <button ion-button clear (click)="setSyria()">
-            <img [ngClass]="{'gray':country=='Lebanon' }" src="assets/imgs/syria (2).png">
-        </button>
+      <div style="width:100%" *ngIf="!connected">
+        <form [formGroup]="loginForm">
+
+          <ion-list>
+
+            <ion-item class="alignele">
+              <ion-label stacked>Email</ion-label>
+              <ion-input type="email" [(ngModel)]="email" formControlName="email" placeholder="email@example.com"></ion-input>
+            </ion-item>
+
+
+            <ion-item class="alignele">
+              <ion-label stacked>Password</ion-label>
+              <ion-input type="password" [(ngModel)]="password" formControlName="password" placeholder="Password"></ion-input>
+            </ion-item>
+
+          </ion-list>
+
+          <button ion-button class="center" [disabled]="!loginForm.valid" (click)="login()">Login</button>
+
+        </form>
       </div>
 
-    </div>
-      </ion-row>
-    </ion-grid>
+      <div style="width:100%" *ngIf="connected">
+        <p style="font-size:20px">{{formsCount}} unsynced forms</p>
+        <button ion-button class="center" (click)='postRequest()'> <ion-icon name="sync"></ion-icon> &nbsp; Forms</button>
+        <button ion-button class="center" (click)='refreshAreasAndPromotions()'> <ion-icon ios="ios-download-outline" md="md-download"></ion-icon> &nbsp; Promotions & Areas</button>
+        <div class="center2">
+            <button ion-button clear (click)="setLeb()" *ngIf="user.lebanon">
+                <img [ngClass]="{'gray':country=='Syria' }" src="assets/imgs/lebanon (1).png">
+            </button>
+            <button ion-button clear (click)="setSyria()" *ngIf="user.syria">
+                <img [ngClass]="{'gray':country=='Lebanon' }" src="assets/imgs/syria (2).png">
+            </button>
+        </div>
+
+      </div>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

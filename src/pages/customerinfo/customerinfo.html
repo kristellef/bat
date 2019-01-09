@@ -93,9 +93,8 @@
         </ion-select>
       </ion-item>
 
-
       <ion-item class="alignele" *ngIf= "promotion.value != null && promotion.value != ''">
-        <ion-label>Promotions "{{promotion.value.name}}"</ion-label>
+        <ion-label stacked>Promotions "{{promotion.value.name}}"</ion-label>
         <ion-select [(ngModel)]="promotionItem1"
         [ngModelOptions]="{standalone: true}"
         placeholder="None">
@@ -104,7 +103,7 @@
       </ion-item>
 
       <ion-item class="alignele" *ngIf= "promotionItem1 != null">
-        <ion-label>Promotions "{{promotion.value.name}}"</ion-label>
+        <ion-label stacked>Promotions "{{promotion.value.name}}"</ion-label>
         <ion-select [(ngModel)]="promotionItem2"
         [ngModelOptions]="{standalone: true}"
         placeholder="None">
@@ -112,7 +111,21 @@
         </ion-select>
       </ion-item>
 
-      <ion-label></ion-label>
+      <ion-item class="alignele">
+        <ion-label stacked>Chosen Area *</ion-label>
+        <ion-select formControlName="area" placeholder="None" (ionChange)="choseArea()">
+          <ion-option *ngFor="let n of areas" [value]="n">{{n.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="alignele" *ngIf= "area.value != null && area.value != ''">
+        <ion-label stacked>Region in {{area.value.name}}</ion-label>
+        <ion-select [(ngModel)]="region"
+        [ngModelOptions]="{standalone: true}"
+        placeholder="None">
+          <ion-option *ngFor="let p of area.value.regions" [value]="p">{{p}}</ion-option>
+        </ion-select>
+      </ion-item>
 
     </ion-list>
 

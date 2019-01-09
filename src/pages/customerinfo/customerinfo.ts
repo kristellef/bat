@@ -30,6 +30,7 @@ export class CustomerinfoPage {
   number: AbstractControl;
   brand: AbstractControl;
   promotion: AbstractControl;
+  area: AbstractControl;
   country: String;
 
   promotions: Array<any>;
@@ -37,9 +38,14 @@ export class CustomerinfoPage {
   promotionItem1: String;
   promotionItem2: String;
 
+  areas: Array<any>;
+  areaId: Number;
+  region: String;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage) {
-    this.refreshPromotions();
     this.refreshCountry();
+    this.refreshPromotions();
+    this.refreshAreas();
 
     let regexPhone='';
     if (this.country=='Lebanon') {
@@ -61,6 +67,7 @@ export class CustomerinfoPage {
             ])],
       brand: ['', Validators.required],
       promotion: ['', Validators.required],
+      area: ['', Validators.required],
     });
 
     this.name = this.formgroup.controls['name'];
@@ -71,23 +78,43 @@ export class CustomerinfoPage {
     this.gender = this.formgroup.controls['gender'];
     this.brand = this.formgroup.controls['brand'];
     this.promotion = this.formgroup.controls['promotion'];
+    this.area = this.formgroup.controls['area'];
   }
 
   ionViewWillEnter() {
     this.refreshCountry();
     this.refreshPromotions();
+    this.refreshAreas();
   }
 
   ionViewDidLoad() {
     this.refreshCountry();
     this.refreshPromotions();
+    this.refreshAreas();
   }
 
   refreshPromotions() {
     // Refresh Country value
     this.storage.get('promotions').then((val) => {
-      this.promotions = val;
+
+        if (this.country == 'Lebanon'){
+            this.promotions = val.Lebanon;
+        } else if(this.country == 'Syria') {
+            this.promotions = val.Syria;
+        }
       this.promotionId = null;
+    });
+  }
+
+  refreshAreas() {
+    // Refresh Areas value
+    this.storage.get('areas').then((val) => {
+        if (this.country == 'Lebanon'){
+            this.areas = val.Lebanon;
+        } else if(this.country == 'Syria') {
+            this.areas = val.Syria;
+        }
+      this.areaId = null;
     });
   }
 
@@ -119,6 +146,8 @@ export class CustomerinfoPage {
       promotionItem1: this.promotionItem1,
       promotionItem2: this.promotionItem2,
       country: this.country,
+      area: this.area.value.id,
+      region: this.region
     }
   }
 
@@ -142,8 +171,15 @@ export class CustomerinfoPage {
     this.promotionItem2 = null;
   }
 
+  choseArea() {
+    this.region = null;
+  }
+
   get submittable() {
     if (this.promotionItem1 == null) {
+        return false;
+    }
+    if (this.region == null) {
         return false;
     }
 
