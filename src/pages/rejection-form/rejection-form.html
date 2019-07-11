@@ -1,0 +1,63 @@
+<!--
+  Generated template for the RejectionFormPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <ion-title><img src="assets/imgs/logo.png" class="logonav"></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form [formGroup]="formgroup">
+
+      <ion-list>
+
+          <ion-item class="alignele">
+            <ion-label stacked>Brand you usually smoke *</ion-label>
+            <ion-select interface="action-sheet" [(ngModel)]="chosenCigaretteBrand" formControlName="cigaretteBrand" placeholder="None" (ionChange)="chosenCigarette==null">
+              <ion-option *ngFor="let n of cigaretteBrands" [value]="n">{{n.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="alignele">
+            <ion-label stacked>Brand Name *</ion-label>
+            <ion-select interface="action-sheet"  [(ngModel)]="chosenCigarette" formControlName="cigarette" *ngIf= "chosenCigaretteBrand != {}
+             && chosenCigaretteBrand.cigarettes && chosenCigaretteBrand.cigarettes.length > 0; else fakeInput "
+            placeholder="Please select">
+              <ion-option *ngFor="let p of chosenCigaretteBrand.cigarettes" [value]="p">{{p}}</ion-option>
+            </ion-select>
+            <ng-template #fakeInput>
+            <ion-input type="text" [(ngModel)]="chosenCigarette"
+            placeholder="Please select a valid cigarett brand"
+             formControlName="cigarette" [disabled]="1"></ion-input>
+             </ng-template>
+
+          </ion-item>
+
+        <ion-item class="alignele">
+          <ion-label stacked>Reason for rejection *</ion-label>
+          <ion-select interface="action-sheet" [(ngModel)]="chosenReason" formControlName="reason" placeholder="None" [disabled]="reasons == null || reasons.length <= 0">
+            <ion-option *ngFor="let item of reasons" [value]="item.name">{{item.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+
+
+
+      </ion-list>
+
+
+    </form>
+
+    <div style="width:100%">
+      <button ion-button class="center" [disabled]="!formgroup.valid" (click)="submit()" >Submit</button>
+    </div>
+
+</ion-content>

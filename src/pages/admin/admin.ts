@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 
 import { CustomerinfoPage } from '../customerinfo/customerinfo';
 import { FirstpagePage } from '../firstpage/firstpage';
+import { SingletonService } from '../../providers/singleton';
 
 /**
  * Generated class for the AdminPage page.
@@ -28,35 +28,59 @@ export class AdminPage {
 
   loginForm: FormGroup;
 
-  token: string;
-  user: Object;
+  token: string = "";
+  clientSecret: string = "";
+  clientId: number = 0;
+  user: Object = {};
 
   baseUrl: string;
   authURL: string;
 
   forms: Array<any>;
+  rejection_forms: Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder, private storage: Storage, private http: Http) {
+  constructor(public navCtrl: NavController,
+         public navParams: NavParams,
+         public formbuilder: FormBuilder,
+         private http: Http,
+         public singleton:SingletonService
+     ) {
+
     this.loginForm = formbuilder.group({
       email: ['', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
       password: ['', Validators.required]
     });
 
-    this.user = {};
-    this.token = "";
+    let userPromise = this.singleton.getProperty('user',{}).then(val => {
+        this.user = val;
+    });
+    let tokenPromise = this.singleton.getProperty('token','').then(val => {
+        this.token = val;
+    });
 
-    this.baseUrl = "https://bat.kristelle.io/api/";
-    this.authURL = "https://bat.kristelle.io/oauth/token";
+    if (this.singleton.env == 'prod' || this.singleton.env == 'production') {
+        this.baseUrl = "https://lebanon.batform.me/api/";
+        this.authURL = "https://lebanon.batform.me/oauth/token";
+        this.clientSecret = "GElapPPKzeQiHueU5khcrtOjQX8SCjLatx4lRGGM"
+        this.clientId = 4;
+    } else {
+        this.baseUrl = "https://bat-lebanon.nahum/api/";
+        this.authURL = "https://bat-lebanon.nahum/oauth/token";
+        this.clientSecret = "WsYQE0tXZBfNRSIRlYSoz9TacdJBxIVf8zAHBqfu";
+        this.clientId = 2;
+    }
 
-    this.refreshData();
-    this.refreshUser();
+    // Once all data is loaded
+    Promise.all([userPromise, tokenPromise]).then(() => {
+        this.refreshData();
+        this.refreshUser();
+    });
   }
 
   getHeaders() {
       var headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
-      headers.append('Access-Control-Allow-Origin', '*');
 
       if (this.token != "") {
           headers.append('Authorization', 'Bearer ' + this.token);
@@ -67,8 +91,8 @@ export class AdminPage {
 
   login(){
     let data = {
-	"client_id": 3,
-	"client_secret": "fQidOFZMRLIC6AOVmBKpD8XkTtRMNL4es242xb57",
+	"client_id": this.clientId,
+	"client_secret": this.clientSecret,
 	"grant_type": "password",
 	"username": this.loginForm.controls['email'].value,
 	"password": this.loginForm.controls['password'].value,
@@ -109,24 +133,11 @@ export class AdminPage {
           let user = JSON.parse((<any>data)._body)
 
           if (this.user == {}) {
-              if (user.lebanon) {
-                this.setLeb();
-            } else {
-                this.setSyria();
-            }
 
             this.saveUser(user);
             alert('Connected. Welcome '+this.user['first_name']+" !");
         } else {
-            if (!user.lebanon && this.country == 'Lebanon') {
-                this.saveUser(user);
-                this.setSyria();
-            } else if(!user.syria && this.country == 'Syria') {
-                this.saveUser(user);
-                this.setLeb();
-            } else {
-                this.saveUser(user);
-            }
+            this.saveUser(user);
         }
 
           return;
@@ -142,21 +153,28 @@ export class AdminPage {
   }
 
   saveToken(value){
-      this.storage.set('token', value);
+      this.singleton.setProperty('token', value);
       this.token = value;
   }
 
   saveUser(value){
-      this.storage.set('user', value);
+      this.singleton.setProperty('user', value);
       this.user = value;
+  }
+
+  logout() {
+      this.saveToken("");
+      this.saveUser({});
+     
+      alert('Goodbye !');
   }
 
   clearSession() {
       this.saveToken("");
       this.saveUser({});
-      this.storage.set('areas',[]);
-      this.storage.set('promotions',[]);
-      this.storage.set('country',"");
+      this.singleton.setProperty('areas',[]);
+      this.singleton.setProperty('promotions',[]);
+      this.singleton.setProperty('country',"");
 
       alert('Session expired.');
   }
@@ -173,23 +191,27 @@ export class AdminPage {
 
   refreshData() {
       // Refresh Country value
-      this.storage.get('country').then((val) => {
+      this.singleton.getProperty('country').then((val) => {
         this.country = val;
       });
-      this.storage.get('forms').then((val) => {
+      this.singleton.getProperty('forms').then((val) => {
         this.forms = val;
       });
-      this.storage.get('user').then((val) => {
+      this.singleton.getProperty('rejection_forms').then((val) => {
+        this.rejection_forms = val;
+      });
+      this.singleton.getProperty('user').then((val) => {
         this.user = val;
       });
-      this.storage.get('token').then((val) => {
+      this.singleton.getProperty('token').then((val) => {
         this.token = val;
       });
   }
 
-  refreshAreasAndPromotions() {
+  refreshAppData() {
       this.refreshPromotions();
-      this.refreshAreas();
+      this.refreshCigaretteBrands();
+      this.refreshRejectionReasons();
   }
 
   refreshPromotions() {
@@ -198,8 +220,7 @@ export class AdminPage {
     this.http.get(this.baseUrl + "promotions", options)
       .subscribe(data => {
         let promotions = JSON.parse((<any>data)._body)
-        console.log(promotions);
-        this.storage.set('promotions',promotions);
+        this.singleton.setProperty('promotions',promotions.data);
         alert('Promotions updated.');
         return;
       }, error => {
@@ -213,14 +234,14 @@ export class AdminPage {
       });
   }
 
-  refreshAreas() {
+  refreshCigaretteBrands() {
     let options = new RequestOptions({ headers: this.getHeaders() });
 
-    this.http.get(this.baseUrl + "areas", options)
+    this.http.get(this.baseUrl + "cigarette_brands", options)
       .subscribe(data => {
-        let areas = JSON.parse((<any>data)._body)
-        this.storage.set('areas',areas);
-        alert('Areas updated.');
+        let cigarette_brands = JSON.parse((<any>data)._body)
+        this.singleton.setProperty('cigarette_brands',cigarette_brands.data);
+        alert('Cigarette brands updated.');
         return;
       }, error => {
           if (error.status == 401) {
@@ -233,26 +254,24 @@ export class AdminPage {
       });
   }
 
-  setLeb() {
-      if (!this.user['lebanon']) {
-          alert('You are not allowed to choose Lebanon.');
+  refreshRejectionReasons() {
+    let options = new RequestOptions({ headers: this.getHeaders() });
+
+    this.http.get(this.baseUrl + "rejection_reasons", options)
+      .subscribe(data => {
+        let rejection_reasons = JSON.parse((<any>data)._body)
+        this.singleton.setProperty('rejection_reasons',rejection_reasons.data);
+        alert('Rejection reasons updated.');
+        return;
+      }, error => {
+          if (error.status == 401) {
+              this.clearSession();
+              return;
+          }
+          console.log(error);
+          alert('Oups, something went wrong... Please try again later.');
           return;
-      }
-
-    this.storage.set('country', 'Lebanon');
-    this.country = 'Lebanon';
-    alert('Country set to Lebanon.');
-  }
-
-  setSyria() {
-    if (!this.user['syria']) {
-          alert('You are not allowed to choose Syria.');
-          return;
-    }
-
-    this.storage.set('country', 'Syria');
-    this.country = 'Syria';
-    alert('Country set to Syria.');
+      });
   }
 
   get formsCount() {
@@ -263,17 +282,32 @@ export class AdminPage {
     }
   }
 
+  get rejectedFormsCount() {
+    if (this.rejection_forms) {
+      return this.rejection_forms.length;
+    } else {
+      return 0;
+    }
+  }
+
   get connected() {
     return this.user != {} && this.token != "";
   }
 
   resetForms() {
-    this.storage.remove('forms');
+    this.singleton.setProperty('forms',null);
     this.forms = [];
     return;
   }
 
+  resetRejectionForms() {
+    this.singleton.setProperty('rejection_forms',null);
+    this.rejection_forms = [];
+    return;
+  }
+
   postRequest() {
+      // Submit forms
     let body = { data: this.forms };
 
     let options = new RequestOptions({ headers: this.getHeaders() });
@@ -293,6 +327,27 @@ export class AdminPage {
         alert('Oups, something went wrong... Please try again later.');
         return;
       });
+
+     //submit rejection forms
+     body = { data: this.rejection_forms };
+
+     options = new RequestOptions({ headers: this.getHeaders() });
+
+     this.http.post(this.baseUrl + "rejection-forms/add", body, options)
+       .subscribe(data => {
+         this.resetRejectionForms();
+         alert('Rejection forms synced.');
+         return;
+       }, error => {
+           if (error.status == 401) {
+               this.clearSession();
+               return;
+           }
+
+         console.log(error);// Error getting the data
+         alert('Oups, something went wrong... Please try again later.');
+         return;
+       });
   }
 
 }

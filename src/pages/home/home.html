@@ -1,6 +1,11 @@
 <ion-header>
-  <button ion-button clear [navPush]="firstPage"><ion-icon name="arrow-back" style="color: #FF9900"></ion-icon>
-</button>
+    <ion-toolbar>
+
+        <button ion-button clear (click)="logout()">
+            <ion-icon name="log-out" class="back-button-icon"></ion-icon> Logout
+        </button>
+
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding class="back">
@@ -16,20 +21,18 @@
 </ion-card> -->
 
  <ion-grid style="height: 100%">
+
     <ion-row justify-content-center align-items-center style="height: 100%">
-     <div *ngIf="this.country=='Lebanon'">
-  <img src="assets/imgs/logo.png" class="logo">
-    <p style="text-align:center; margin-top:10px; font-size:20px">Are you a smoker over 18?</p>
-    <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
-    <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
-  </div>
-  <div *ngIf="this.country=='Syria'">
-<img src="assets/imgs/1970lionlogo.png" class="logoSyria">
- <p style="text-align:center; margin-top:10px; font-size:20px">Are you a smoker over 18?</p>
- <button ion-button clear [navPush]="customerinfoPage" class="btn" style="margin-top:10px">Yes</button>
- <button ion-button clear onclick="unsuccessful()" class="btn" style="margin-top:10px" >No</button>
-</div>
+     <div>
+        <img src="assets/imgs/logo.png" class="logo">
+      </div>
     </ion-row>
+
+    <ion-row justify-content-center align-items-center style="height: 100%">
+        <button ion-button  class="center btn-home" [navPush]="customerinfoPage" default style="margin-top:10px">Full Form</button>
+        <button ion-button class="center btn-home" [navPush]="rejectionFormPage" style="margin-top:10px" >Rejection Form</button>
+    </ion-row>
+
   </ion-grid>
 
 </ion-content>

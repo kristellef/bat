@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AdminPage } from './admin';
+import { RejectionFormPage } from './rejection-form';
 
 @NgModule({
   declarations: [
   ],
   imports: [
-    IonicPageModule.forChild(AdminPage),
+    IonicPageModule.forChild(RejectionFormPage),
   ],
-
 })
-export class AdminPageModule {
-
-}
+export class RejectionFormPageModule {}

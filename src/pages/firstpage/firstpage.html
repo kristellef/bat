@@ -17,7 +17,7 @@
         <img src="assets/imgs/logo.png" class="logo centerimg">
 
         <button ion-button class="center" [navPush]="adminPage">Admin</button>
-        <button ion-button class="center" [navPush]="homePage" [disabled]="!formAccess">Form</button>
+        <button ion-button class="center" [navPush]="employeeSelection" [disabled]="!formAccess" (click)="alertForm()">Login</button>
       </div>
 
     </ion-row>

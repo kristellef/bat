@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {CustomerinfoPage} from '../customerinfo/customerinfo';
+import {RejectionFormPage} from '../rejection-form/rejection-form';
 import {AdminPage} from '../admin/admin';
 import { FirstpagePage } from '../firstpage/firstpage';
-import { Storage } from '@ionic/storage';
+import { SingletonService } from '../../providers/singleton';
 
 @Component({
   selector: 'page-home',
@@ -13,12 +14,26 @@ export class HomePage {
 	customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
   firstPage = FirstpagePage;
-  country = String;
-	constructor(public navCtrl: NavController, private storage: Storage,) {
+  rejectionFormPage = RejectionFormPage;
+  outletUser: Object;
+
+	constructor(public navCtrl: NavController, public singleton:SingletonService) {
+        this.singleton.getProperty('outlet_user').then((val) => {
+          this.outletUser = val;
+        });
   }
+
   ionViewDidLoad() {
-    this.storage.get('country').then((val) => {
-      this.country = val;
-    });
+      this.singleton.getProperty('outlet_user').then((val) => {
+        this.outletUser = val;
+      });
   }
+
+
+  logout() {
+      this.singleton.setProperty('old_outlet_user',this.outletUser);
+      this.singleton.setProperty('outlet_user',{});
+      this.navCtrl.popToRoot();
+  }
+
 }

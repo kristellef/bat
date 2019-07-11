@@ -1,0 +1,21 @@
+employee-selection {
+
+    .border-none .item-inner {
+        border: none !important;
+    }
+
+    .list-ios > .item-block:last-child {
+        border: none !important;
+    }
+
+    .back-button-icon {
+        margin-right: 15px;
+    }
+
+    ion-label {
+        text-overflow: ellipsis;
+        text-overflow: initial;
+        white-space: normal;
+    }
+
+}

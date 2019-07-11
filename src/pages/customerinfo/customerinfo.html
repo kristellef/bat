@@ -31,24 +31,13 @@
       </ion-item>
 
       <div padding class="alignele">
-        <ion-segment formControlName="birthdate" *ngIf="this.country=='Lebanon'">
+        <ion-segment formControlName="birthdate">
           <ion-segment-button value="< 30" class="btngender">
-            < 30 y.o. </ion-segment-button>
+            < 30 y.o.
+            </ion-segment-button>
               <ion-segment-button value="> 30" class="btngender">
                 > 30 y.o.
               </ion-segment-button>
-        </ion-segment>
-
-        <ion-segment formControlName="birthdate" *ngIf="this.country=='Syria'">
-          <ion-segment-button value="18-25" class="btngender">
-            18-25 y.o.
-          </ion-segment-button>
-          <ion-segment-button value="26-35" class="btngender">
-            26-35 .y.o.
-          </ion-segment-button>
-          <ion-segment-button value="35+" class="btngender">
-            35 .y.o.+
-          </ion-segment-button>
         </ion-segment>
       </div>
 
@@ -69,33 +58,45 @@
         <ion-input type="email" [(ngModel)]="myEmail" formControlName="email" placeholder="johndoe@gmail.com"></ion-input>
       </ion-item>
 
-      <ion-item class="alignele" *ngIf="this.country=='Lebanon'">
-        <ion-label stacked>Phone Number *</ion-label>
+      <ion-item class="alignele">
+        <ion-label stacked>Phone Number</ion-label>
         <p item-left class='input-prefix'>+961</p>
         <ion-input class="has-prefix" type="number" minlength="8" maxlength="8" formControlName="number" placeholder="12345678"></ion-input>
-      </ion-item>
-      <ion-item class="alignele" *ngIf="this.country=='Syria'">
-        <ion-label stacked>Phone Number *</ion-label>
-        <p item-left class='input-prefix'>+963(0)</p>
-
-        <ion-input class="has-prefix" type="number" minlength="9" maxlength="9" formControlName="number" placeholder="123456789"></ion-input>
       </ion-item>
 
       <ion-item class="alignele">
         <ion-label stacked>Brand you usually smoke *</ion-label>
-        <ion-input type="text" [(ngModel)]="mybrand" formControlName="brand" placeholder="None"></ion-input>
+        <ion-select interface="action-sheet"  [(ngModel)]="chosenCigaretteBrand" formControlName="cigaretteBrand" placeholder="None" (ionChange)="chosenCigarette==null">
+          <ion-option *ngFor="let n of cigaretteBrands" [value]="n">{{n.name}}</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item class="alignele">
+        <ion-label stacked>Brand Name *</ion-label>
+        <ion-select interface="action-sheet" [(ngModel)]="chosenCigarette" formControlName="cigarette" *ngIf= "chosenCigaretteBrand != {}
+         && chosenCigaretteBrand.cigarettes && chosenCigaretteBrand.cigarettes.length > 0; else fakeInput "
+        placeholder="Please select">
+          <ion-option *ngFor="let p of chosenCigaretteBrand.cigarettes" [value]="p">{{p}}</ion-option>
+        </ion-select>
+        <ng-template #fakeInput>
+        <ion-input type="text" [(ngModel)]="chosenCigarette"
+        placeholder="Please select a valid cigarett brand"
+         formControlName="cigarette" [disabled]="1"></ion-input>
+         </ng-template>
+
+      </ion-item>
+
+
+      <ion-item class="alignele">
         <ion-label stacked>Chosen promotions *</ion-label>
-        <ion-select formControlName="promotion" placeholder="None" (ionChange)="chosePromotion()">
+        <ion-select interface="action-sheet"  formControlName="promotion" placeholder="None" (ionChange)="chosePromotion()">
           <ion-option *ngFor="let n of promotions" [value]="n">{{n.name}}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item class="alignele" *ngIf= "promotion.value != null && promotion.value != ''">
         <ion-label stacked>Promotions "{{promotion.value.name}}"</ion-label>
-        <ion-select [(ngModel)]="promotionItem1"
+        <ion-select interface="action-sheet"  [(ngModel)]="promotionItem1"
         [ngModelOptions]="{standalone: true}"
         placeholder="None">
           <ion-option *ngFor="let p of promotion.value.options" [value]="p">{{p}}</ion-option>
@@ -104,26 +105,10 @@
 
       <ion-item class="alignele" *ngIf= "promotionItem1 != null">
         <ion-label stacked>Promotions "{{promotion.value.name}}"</ion-label>
-        <ion-select [(ngModel)]="promotionItem2"
+        <ion-select interface="action-sheet"  [(ngModel)]="promotionItem2"
         [ngModelOptions]="{standalone: true}"
         placeholder="None">
           <ion-option *ngFor="let p of promotion.value.options" [value]="p">{{p}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item class="alignele">
-        <ion-label stacked>Chosen Area *</ion-label>
-        <ion-select formControlName="area" placeholder="None" (ionChange)="choseArea()">
-          <ion-option *ngFor="let n of areas" [value]="n">{{n.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item class="alignele" *ngIf= "area.value != null && area.value != ''">
-        <ion-label stacked>Region in {{area.value.name}}</ion-label>
-        <ion-select [(ngModel)]="region"
-        [ngModelOptions]="{standalone: true}"
-        placeholder="None">
-          <ion-option *ngFor="let p of area.value.regions" [value]="p">{{p}}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -134,6 +119,6 @@
 
   <!-- <button ion-button class="center"  (click)="submit()" >Save</button> -->
 
-  <button ion-button class="center" [disabled]="!submittable" (click)="submit()" [navPush]="homepage">Save</button>
+  <button ion-button class="center" [disabled]="!submittable" (click)="submit()" >Save</button>
 
 </ion-content>

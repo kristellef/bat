@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { EmployeeSelection } from '../employee-selection/employee-selection';
 import { AdminPage } from '../admin/admin';
 import { CustomerinfoPage } from '../customerinfo/customerinfo';
-import { Storage } from '@ionic/storage';
+import { SingletonService } from '../../providers/singleton';
 
 /**
  * Generated class for the FirstpagePage page.
@@ -20,11 +20,11 @@ import { Storage } from '@ionic/storage';
 export class FirstpagePage {
   customerinfoPage = CustomerinfoPage;
   adminPage = AdminPage;
-  homePage = HomePage;
+  employeeSelection = EmployeeSelection;
   country: String;
   promotions: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public singleton:SingletonService) {
     this.refreshCountry();
     this.refreshPromotions();
   }
@@ -41,34 +41,33 @@ export class FirstpagePage {
 
   refreshCountry() {
     // Refresh Country value
-    this.storage.get('country').then((val) => {
+    this.singleton.getProperty('country').then((val) => {
       this.country = val;
     });
-
-    console.log('Country found on firstpage page:' + this.country);
   }
 
   refreshPromotions() {
       // Refresh Country value
-      this.storage.get('promotions').then((val) => {
+      this.singleton.getProperty('promotions').then((val) => {
         this.promotions = val;
       });
+  }
 
-      console.log('Promotions refreshed.',this.promotions);
+  alertForm() {
+      if (!this.formAccess) {
+          alert('An admin must download app data before you can access the form.')
+      }
   }
 
   get formAccess() {
     // we want the country to be either Lebanon or Syria
     let access = true;
 
-    if (this.country != 'Lebanon' && this.country != 'Syria') {
-      access = false;
-    }
-
     // We want formt to be loaded
     if (this.promotions == null || this.promotions == undefined){
       access = false;
     }
+
     return access;
 
   }

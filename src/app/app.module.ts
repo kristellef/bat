@@ -12,6 +12,9 @@ import { HomePage } from '../pages/home/home';
 import { CustomerinfoPage } from '../pages/customerinfo/customerinfo';
 import { AdminPage } from '../pages/admin/admin';
 import { FirstpagePage } from '../pages/firstpage/firstpage';
+import { EmployeeSelection } from '../pages/employee-selection/employee-selection';
+import { RejectionFormPage } from '../pages/rejection-form/rejection-form';
+import { SingletonService } from '../providers/singleton';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,14 @@ import { FirstpagePage } from '../pages/firstpage/firstpage';
     CustomerinfoPage,
     AdminPage,
     FirstpagePage,
+    EmployeeSelection,
+    RejectionFormPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp, { mode: 'ios'}),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,12 +39,15 @@ import { FirstpagePage } from '../pages/firstpage/firstpage';
     CustomerinfoPage,
     AdminPage,
     FirstpagePage,
+    EmployeeSelection,
+    RejectionFormPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     HTTP,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SingletonService
   ]
 })
 export class AppModule {}

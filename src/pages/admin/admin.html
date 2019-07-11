@@ -7,6 +7,12 @@
 <ion-header>
   <ion-navbar>
     <!-- <button ion-button clear [navPush]="firstPage"><ion-icon name="arrow-back" style="color: #FF9900"></ion-icon></button> -->
+
+    <ion-buttons end >
+      <button ion-button icon-only (click)="logout()" *ngIf="connected">
+        Logout
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -50,18 +56,9 @@
       </div>
 
       <div style="width:100%" *ngIf="connected">
-        <p style="font-size:20px">{{formsCount}} unsynced forms</p>
-        <button ion-button class="center" (click)='postRequest()'> <ion-icon name="sync"></ion-icon> &nbsp; Forms</button>
-        <button ion-button class="center" (click)='refreshAreasAndPromotions()'> <ion-icon ios="ios-download-outline" md="md-download"></ion-icon> &nbsp; Promotions & Areas</button>
-        <div class="center2">
-            <button ion-button clear (click)="setLeb()" *ngIf="user.lebanon">
-                <img [ngClass]="{'gray':country=='Syria' }" src="assets/imgs/lebanon (1).png">
-            </button>
-            <button ion-button clear (click)="setSyria()" *ngIf="user.syria">
-                <img [ngClass]="{'gray':country=='Lebanon' }" src="assets/imgs/syria (2).png">
-            </button>
-        </div>
-
+        <p><span style="color: green">{{formsCount}}</span> + <span style="color:red">{{rejectedFormsCount}}</span> unsynced forms</p>
+        <button ion-button class="center btn-admin" (click)='postRequest()'>Sync Forms</button>
+        <button ion-button class="center btn-admin" (click)='refreshAppData()'> Refresh App Data</button>
       </div>
     </ion-row>
   </ion-grid>

@@ -2,6 +2,17 @@
 	text-align: center;
 }
 
+html,p,.button-inner {
+	font-size: 1.3rem !important;
+}
+
+.button-ios {
+	height: 2em;
+}
+
+.icon {
+	font-size: 2rem;
+}
 
 
 .center{
@@ -98,11 +109,15 @@ input:invalid {
 
 .input-prefix {
 	color: black !important;
-	font-size: 17px !important;
+	font-size: 1.3rem !important;
 	margin-top: 37px !important;
 	margin-right: 5px !important;
 	position: absolute !important;
-	top: 0px !important;
+	bottom: 1px !important;
+}
+
+input, .text-input, .select-text {
+	font-size: 1.3rem;
 }
 
 .has-prefix {
